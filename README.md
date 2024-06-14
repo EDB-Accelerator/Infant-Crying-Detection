@@ -15,11 +15,6 @@ If you use this algorithm for academic research, please include the following ci
 
 K. Lee, L. Henry, M. Brotman, F. Pereira, “Infant Crying Detection Algorithm,” GitHub repository, National Institute of Mental Health, June 14, 2024. [Online]. Available: https://github.com/EDB-Accelerator/Infant-Crying-Detection. [Accessed: Day-Month-Year].
 
-
-## 📉 Using the Algorithm
-Start with this image to understand the algorithm's output distinctions:
-
-
 ## 🌱 Background
 The development of this algor ithm is inspired and based on prior work accessible at [AgnesMayYao/Infant-Crying-Detection](https://github.com/AgnesMayYao/Infant-Crying-Detection), which provides a foundational framework for our enhancements using PyTorch.
 
@@ -29,12 +24,9 @@ To run this project, you will need PyTorch along with several other libraries fo
 
 Please ensure that all dependencies are installed to guarantee the functionality of the detection algorithm.
 
-## 🚀 Getting Started
-To get started with this project:
-1. Clone the repository to your local machine.
-2. Install the required dependencies:
    ```bash
    pip install -r requirements.txt
+```
 
 ## 🗂️ Sample Data
 Sample dataset included with specifications:
