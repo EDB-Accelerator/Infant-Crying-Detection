@@ -74,13 +74,6 @@ class CustomPyTorchModel(nn.Module):
         x = self.fc_final(x)  # Output from the final fully connected layer
         return x
 
-# n_fft = 980
-# hop_length = 490
-# n_mels = 225
-# img_rows, img_cols = 225, 225
-# batch_size = 64
-# num_classes = 2
-
 def time_masking(mel_spectrogram, tau, time_masking_para=100, time_mask_num=2):
 	mel_spectrogram = np.asarray(mel_spectrogram)
 	for i in range(time_mask_num):

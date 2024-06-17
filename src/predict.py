@@ -85,33 +85,24 @@ def label_to_num(input_label):
 		return 0
 	elif input_label == 'fuss' or input_label =='cry':
 		return 1
-	# elif input_label == 'cry':
-	# 	return 2
-	# elif input_label == 'scream':
-	# 	return 3
 	else:
 		return 2
 
-
-
-# audio files: list of 10 min wav files (10 min mono)
 # annotation files format:
 # 0,10,notcry
 # 10,15,cry
 # 15,40,notcry
-# predict_alex_svm(test_audio_files,test_annotation_filtered_files,test_prediction_files,alex_model_path,svm_model_path,'torch',decision_scores_only=False,best_threshold=None)
+def predict_alex_svm(params,audio_files,annotation_filtered_files,prediction_files,alex_model_path,svm_model_path,alex_model_type='torch',decision_scores_only=False,best_threshold=None):
 
-def predict_alex_svm(audio_files,annotation_filtered_files,prediction_files,alex_model_path,svm_model_path,alex_model_type='torch',decision_scores_only=False,best_threshold=None):
+	n_fft = params["n_fft"]
+	hop_length = params["hop_length"]
+	n_mels = params["n_mels"]
+	img_rows, img_cols = params["img_rows"], params["img_cols"]
+	batch_size = params["batch_size"]
+	num_classes = params["num_classes"]
 
-# test_audio_files,test_annotation_filtered_files,test_prediction_files,alex_model_path,svm_model_path,'torch',decision_scores_only=False,best_threshold=best_threshold)
-
-	# predict_alex_svm(test_audio_files,test_annotation_filtered_files,alex_model_path,svm_model_path)
-	# audio_files = test_audio_files
-	# annotation_filtered_files = test_annotation_filtered_files
-	# prediction_files = test_prediction_files
 
 	all_data = []
-	# all_predictions = []
 	all_feature_data = []
 	
 	decision_scores = []
@@ -125,17 +116,6 @@ def predict_alex_svm(audio_files,annotation_filtered_files,prediction_files,alex
 			y, sr = librosa.load(audio_filename)
 			duration = librosa.get_duration(y = y, sr = sr)
 			previous = 0
-
-			# ra_annotations = []
-			# with open(annotation_filename_ra, 'r') as csvfile:
-			# 	csvreader = csv.reader(csvfile, delimiter=',')
-			# 	for row in csvreader:
-			# 		print(row)
-			# 		if len(row) > 0:
-			# 			row[2] = label_to_num(row[2])
-			# 			if float(row[0]) - previous > 0 and int(row[2]) <= 2 and int(row[0]) <= duration // 10 :
-			# 				ra_annotations.append([float(row[0]), min(duration // 10, float(row[1])), int(row[2])])
-			#windows = [[0, 5], [1, 6],......]
 			windows = []
 			for j in range(0, int(duration) - 4):
 				windows.append([j, j + 5])
@@ -234,8 +214,6 @@ def predict_alex_svm(audio_files,annotation_filtered_files,prediction_files,alex
 		clf = load(svm_model_path)
   
   		# Calculate decision function on the new training set
-		# decision_scores.append(clf.decision_function(svm_input))
-		# decision_score = clf.decision_function(svm_input)
 		decision_score = clf.predict_proba(svm_input)[:,1]
 		if best_threshold != None:
 			# Convert decision scores to a numpy array for vectorized operations (if not already an array)
@@ -255,10 +233,6 @@ def predict_alex_svm(audio_files,annotation_filtered_files,prediction_files,alex
 		decision_scores.append(decision_score)
 		if decision_scores_only:
 			continue
-		
-
-
-
 
 		for ind, val in enumerate(filtered_annotations):
 			if val >= 1:
@@ -278,17 +252,12 @@ def predict_alex_svm(audio_files,annotation_filtered_files,prediction_files,alex
 
 		filtered_annotations = timed_filted[:, 1]
 		predictions.append(filtered_annotations)
-		# all_predictions.extend(filtered_annotations)
 		df_record = pd.DataFrame(filtered_annotations)
 		df_record.to_csv(prediction_files[i],header=False,index=False)
 		print("generated:",prediction_files[i])
-	
- 
  
 	if decision_scores_only:
 		return decision_scores
 
 	return predictions,decision_scores
-
-######################
 

@@ -10,12 +10,12 @@ from imblearn.over_sampling import SMOTE, RandomOverSampler
 from imblearn.under_sampling import RandomUnderSampler
 from pyAudioAnalysis import ShortTermFeatures
 
-n_fft = 980
-hop_length = 490
-n_mels = 225
-img_rows, img_cols = 225, 225
-batch_size = 128
-num_classes = 2
+# n_fft = 980
+# hop_length = 490
+# n_mels = 225
+# img_rows, img_cols = 225, 225
+# batch_size = 128
+# num_classes = 2
 
 import sys
 sys.path.insert(1, 'src') # Path to the directory that contains the file, not the file itself
