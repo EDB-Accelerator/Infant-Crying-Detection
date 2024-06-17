@@ -16,7 +16,6 @@ data/test/**
 data/train/**
 data/validation/**
 split/**
-example/*.py
 src/split.py
 .Python
 build/
