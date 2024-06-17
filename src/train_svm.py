@@ -69,7 +69,15 @@ def label_to_num(input_label):
 	else:
 		return 2
 
-def train_svm(audio_files,annotation_files,alex_model_path,model_output_path,Cvalue=1.0,imbalance='SMOTE',random_seed=None):
+def train_svm(params,audio_files,annotation_files,alex_model_path,model_output_path,Cvalue=1.0,imbalance='SMOTE',random_seed=None):
+
+	n_fft = params["n_fft"]
+	hop_length = params["hop_length"]
+	n_mels = params["n_mels"]
+	img_rows, img_cols = params["img_rows"], params["img_cols"]
+	batch_size = params["batch_size"]
+	num_classes = params["num_classes"]
+ 
 	import numpy as np
 
 	all_data = []
@@ -256,6 +264,14 @@ def train_svm(audio_files,annotation_files,alex_model_path,model_output_path,Cva
 	
 
 	# dump(clf, model_out_folder + '/svm_noflip.joblib')
+	import os
+	output_dir = os.path.dirname(model_output_path)
+	# Create the directory if it does not exist
+	if not os.path.exists(output_dir): os.makedirs(output_dir)
+
 	dump(clf, model_output_path)
+ 
+ 
+ 
 ######################
 

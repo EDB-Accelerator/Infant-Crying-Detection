@@ -74,12 +74,12 @@ class CustomPyTorchModel(nn.Module):
         x = self.fc_final(x)  # Output from the final fully connected layer
         return x
 
-n_fft = 980
-hop_length = 490
-n_mels = 225
-img_rows, img_cols = 225, 225
-batch_size = 64
-num_classes = 2
+# n_fft = 980
+# hop_length = 490
+# n_mels = 225
+# img_rows, img_cols = 225, 225
+# batch_size = 64
+# num_classes = 2
 
 def time_masking(mel_spectrogram, tau, time_masking_para=100, time_mask_num=2):
 	mel_spectrogram = np.asarray(mel_spectrogram)
@@ -130,7 +130,17 @@ def label_to_num(input_label):
 		return 4
 from os.path import expanduser
 home = expanduser("~")
-def preprocessing_train(audio_files,annotation_files):
+
+def preprocessing_train(params,audio_files,annotation_files):
+    
+	n_fft = params["n_fft"]
+	hop_length = params["hop_length"]
+	n_mels = params["n_mels"]
+	img_rows, img_cols = params["img_rows"], params["img_cols"]
+	batch_size = params["batch_size"]
+	num_classes = params["num_classes"]
+
+
 	all_data = []
 	all_labels = []
 	for audio_idx in range(len(audio_files)):
@@ -175,7 +185,7 @@ def preprocessing_train(audio_files,annotation_files):
 	all_data = np.asarray(all_data)
 	print(all_data.shape) #(number of windows, n_mels, 5 * sr / hop_length)
 	print(Counter(all_labels))
-	
+
 	x_train, y_train = all_data, all_labels
 	all_data, all_labels = None, None
 	print(Counter(y_train))
@@ -201,7 +211,7 @@ def preprocessing_train(audio_files,annotation_files):
 	# x_train, y_train = rus.fit_resample(x_train, y_train)
 	x_train_resampled, y_train_resampled = smote.fit_resample(x_train, y_train)
 	x_train,y_train = x_train_resampled,y_train_resampled
-	
+
 	#x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
 	input_shape = (img_rows, img_cols, 1)
 	x_train = x_train.astype('float32')
@@ -222,9 +232,19 @@ def preprocessing_train(audio_files,annotation_files):
 
 
 
-def train_alex(audio_files,annotation_files,val_audio_files,val_annotation_files,model_output_path,l2regular=None):
-	x_train,y_train = preprocessing_train(audio_files,annotation_files)
-	x_val, y_val = preprocessing_train(val_audio_files,val_annotation_files)
+# audio_files,annotation_files,val_audio_files,val_annotation_files,model_output_path = train_audio_files,train_annotation_files,validation_audio_files,validation_annotation_files,alex_model_path
+
+def train_alex(params,audio_files,annotation_files,val_audio_files,val_annotation_files,model_output_path,l2regular=None):
+	
+	n_fft = params["n_fft"]
+	hop_length = params["hop_length"]
+	n_mels = params["n_mels"]
+	img_rows, img_cols = params["img_rows"], params["img_cols"]
+	batch_size = params["batch_size"]
+	num_classes = params["num_classes"]
+  
+	x_train,y_train = preprocessing_train(params,audio_files,annotation_files)
+	x_val, y_val = preprocessing_train(params,val_audio_files,val_annotation_files)
 
 	# Convert to PyTorch tensors if they are numpy arrays
 	if isinstance(x_train, np.ndarray):
@@ -317,6 +337,10 @@ def train_alex(audio_files,annotation_files,val_audio_files,val_annotation_files
 				print('Early stopping triggered. Restoring best model weights!')
 				model.load_state_dict(best_model_wts)
 				break
+	import os
+	output_dir = os.path.dirname(model_output_path)
+	# Create the directory if it does not exist
+	if not os.path.exists(output_dir): os.makedirs(output_dir)
 
 	torch.save(model.state_dict(), model_output_path)
-		
+	

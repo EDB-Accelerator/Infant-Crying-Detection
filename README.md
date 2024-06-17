@@ -5,18 +5,20 @@ This project presents an advanced **Infant Crying Detection Algorithm** using Py
 
 
 ## 🧑‍🔬 Contributors
-- Kyunghun Lee
-- Lauren Henry
-- Melissa Brotman
-- Francisco Pereira
+- Kyunghun Lee (National Institutes of Health)
+- Lauren Henry (National Institutes of Health)
+- Laurie Wakschlag (Northwestern University)
+- Elizabeth Norton (Northwestern University)
+- Francisco Pereira (National Institutes of Health)
+- Melissa Brotman (National Institutes of Health)
 
 ## 📄 Citation Information
-If you use this algorithm for academic research, please include the following citation:
+If you use this code for academic research, please include the following citation:
 
 K. Lee, L. Henry, M. Brotman, F. Pereira, “Infant Crying Detection Algorithm,” GitHub repository, National Institute of Mental Health, June 14, 2024. [Online]. Available: https://github.com/EDB-Accelerator/Infant-Crying-Detection. [Accessed: Day-Month-Year].
 
 ## 🌱 Background
-The development of this algor ithm is inspired and based on prior work accessible at [AgnesMayYao/Infant-Crying-Detection](https://github.com/AgnesMayYao/Infant-Crying-Detection), which provides a foundational framework for our enhancements using PyTorch.
+The development of this code is inspired and based on prior work accessible at [AgnesMayYao/Infant-Crying-Detection](https://github.com/AgnesMayYao/Infant-Crying-Detection), which provides a foundational framework for our enhancements using PyTorch.
 
 
 ## 🔧 Requirements
