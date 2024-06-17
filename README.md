@@ -52,7 +52,8 @@ Detailed explanations of source code files can be found below:
 
 ## 📓 Jupyter Notebook Examples
 Explore practical examples and demonstrations in the Jupyter notebooks provided in the repository.
-
+- [Training (Jupyter Notebook)](https://github.com/EDB-Accelerator/Infant-Crying-Detection/blob/main/example/train.ipynb)
+- [Training (Google Colab)](https://colab.research.google.com/github/EDB-Accelerator/Infant-Crying-Detection/blob/main/example/train.ipynb)
 
 
 
