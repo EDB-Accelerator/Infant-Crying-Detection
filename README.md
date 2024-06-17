@@ -17,6 +17,8 @@ If you use this code for academic research, please include the following citatio
 
 K. Lee, L. Henry, M. Brotman, F. Pereira, “Infant Crying Detection Algorithm,” GitHub repository, National Institute of Mental Health, June 14, 2024. [Online]. Available: https://github.com/EDB-Accelerator/Infant-Crying-Detection. [Accessed: Day-Month-Year].
 
+The development of this code is inspired and based on prior work accessible at:
+
 X. Yao, M. Micheletti, M. Johnson, E. Thomaz, and K. de Barbaro, "Infant Crying Detection in Real-World Environments," in ICASSP 2022
 
 M. Micheletti, X. Yao, M. Johnson, and K. de Barbaro, "Validating a Model to Detect Infant Crying from Naturalistic Audio," in Behavior Research Methods 2022
