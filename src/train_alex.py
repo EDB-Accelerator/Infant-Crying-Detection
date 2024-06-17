@@ -176,12 +176,12 @@ def preprocessing_train(params,audio_files,annotation_files):
 		all_labels.extend(labels)
 		all_data.extend(image_windows)
 	all_data = np.asarray(all_data)
-	print(all_data.shape) #(number of windows, n_mels, 5 * sr / hop_length)
-	print(Counter(all_labels))
+	# print(all_data.shape) #(number of windows, n_mels, 5 * sr / hop_length)
+	# print(Counter(all_labels))
 
 	x_train, y_train = all_data, all_labels
 	all_data, all_labels = None, None
-	print(Counter(y_train))
+	# print(Counter(y_train))
 	idx = np.random.choice(np.arange(len(x_train)), len(x_train), replace=False)
 	x_train = x_train[idx, :]
 	y_train = np.asarray(y_train)[idx]
@@ -196,7 +196,7 @@ def preprocessing_train(params,audio_files,annotation_files):
 			additional_labels.append(1)
 	y_train.extend(additional_labels)
 	additional_labels = None
-	print(Counter(y_train))
+	# print(Counter(y_train))
 	x_train = np.asarray(x_train)
 	x_train = x_train.reshape(x_train.shape[0], img_rows * img_cols)
 	smote = SMOTE(random_state=42)
@@ -303,7 +303,7 @@ def train_alex(params,audio_files,annotation_files,val_audio_files,val_annotatio
 			running_loss += loss.item()
 
 		# Print average loss for the epoch
-		print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/len(train_loader):.4f}')
+		# print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/len(train_loader):.4f}')
 	
 		# Validation step
 		# model.eval()
@@ -317,7 +317,7 @@ def train_alex(params,audio_files,annotation_files,val_audio_files,val_annotatio
 				val_running_loss += loss.item()
 
 		avg_val_loss = val_running_loss / len(val_loader)
-		print(f'Epoch [{epoch+1}/{num_epochs}], Validation Loss: {avg_val_loss:.4f}')
+		# print(f'Epoch [{epoch+1}/{num_epochs}], Validation Loss: {avg_val_loss:.4f}')
 
 			# Early Stopping mechanism
 		if avg_val_loss < best_val_loss:
@@ -327,7 +327,7 @@ def train_alex(params,audio_files,annotation_files,val_audio_files,val_annotatio
 		else:
 			patience_counter += 1
 			if patience_counter >= patience:
-				print('Early stopping triggered. Restoring best model weights!')
+				# print('Early stopping triggered. Restoring best model weights!')
 				model.load_state_dict(best_model_wts)
 				break
 	import os

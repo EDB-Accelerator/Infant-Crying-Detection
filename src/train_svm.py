@@ -114,10 +114,10 @@ def train_svm(params,audio_files,annotation_files,alex_model_path,model_output_p
 		with open(annotation_filename_ra, 'r') as csvfile:
 			csvreader = csv.reader(csvfile, delimiter=',')
 			for row in csvreader:
-				print(row)
+				# print(row)
 				if len(row) > 0:
 					row[2] = label_to_num(row[2])
-					print(row[2])
+					# print(row[2])
 					if float(row[0]) - previous > 0 and int(row[2]) <= 2 and int(row[0]) <= duration // 10 :
 						rowTest = row
 						ra_annotations.append([float(row[0]), min(duration // 10, float(row[1])), int(row[2])])
@@ -198,9 +198,9 @@ def train_svm(params,audio_files,annotation_files,alex_model_path,model_output_p
 	all_data = all_data.astype('float32')
 	all_data /= 80.0
 
-	print('all_data shape:', all_data.shape)
-	print(all_data.shape[0], 'train samples')
-	print(Counter(all_labels))
+	# print('all_data shape:', all_data.shape)
+	# print(all_data.shape[0], 'train samples')
+	# print(Counter(all_labels))
 
 	model = CustomPyTorchModel(num_classes=2)
 	model.load_state_dict(torch.load(alex_model_path))
@@ -232,7 +232,7 @@ def train_svm(params,audio_files,annotation_files,alex_model_path,model_output_p
 
 	# Convert list of arrays to a single NumPy array
 	image_vector = np.vstack(all_predictions)
-	print("image_vector shape:",image_vector.shape)
+	# print("image_vector shape:",image_vector.shape)
 	svm_input = np.concatenate((image_vector, all_feature_data), axis = 1)
 	
 	# if modeltype == 'logisticregression':

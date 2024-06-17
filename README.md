@@ -21,14 +21,14 @@ K. Lee, L. Henry, M. Brotman, F. Pereira, “Infant Crying Detection Algorithm,�
 The development of this code is inspired and based on prior work accessible at [AgnesMayYao/Infant-Crying-Detection](https://github.com/AgnesMayYao/Infant-Crying-Detection), which provides a foundational framework for our enhancements using PyTorch.
 
 
-## 🔧 Requirements
+<!-- ## 🔧 Requirements
 To run this project, you will need PyTorch along with several other libraries focused on audio processing and analysis. A comprehensive list of required Python packages can be found in `requirements.txt`.
 
 Please ensure that all dependencies are installed to guarantee the functionality of the detection algorithm.
 
    ```bash
    pip install -r requirements.txt
-```
+``` -->
 
 ## 🗂️ Sample Data
 Sample dataset included with specifications:

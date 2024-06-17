@@ -119,7 +119,7 @@ def predict_alex_svm(params,audio_files,annotation_filtered_files,prediction_fil
 			windows = []
 			for j in range(0, int(duration) - 4):
 				windows.append([j, j + 5])
-			print(len(windows))
+			# print(len(windows))
 
 			previous = 0
 			filtered_annotations = []
@@ -132,7 +132,7 @@ def predict_alex_svm(params,audio_files,annotation_filtered_files,prediction_fil
 					filtered_annotations.extend([1] * int(float(row[1]) - float(row[0])))
 			if duration - previous > 0:
 				filtered_annotations.extend([0] * int(duration - previous))
-			print(duration, len(filtered_annotations))
+			# print(duration, len(filtered_annotations))
 
 			S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=n_mels, fmax=None, n_fft = n_fft, hop_length = hop_length)
 			S = librosa.power_to_db(S, ref=np.max) + 80
@@ -154,7 +154,7 @@ def predict_alex_svm(params,audio_files,annotation_filtered_files,prediction_fil
 			image_windows = image_windows.reshape(image_windows.shape[0], img_rows, img_cols, 1)
 			image_windows = image_windows.astype('float32')
 			image_windows /= 80.0
-			print('image_windows shape:', image_windows.shape)
+			# print('image_windows shape:', image_windows.shape)
 			
 			if alex_model_type != 'tensorflow':
 				model = CustomPyTorchModel(num_classes=2)
@@ -184,7 +184,7 @@ def predict_alex_svm(params,audio_files,annotation_filtered_files,prediction_fil
 						prediction.extend(probabilities.cpu().numpy())
 						# Convert list of arrays to a single NumPy array
 						image_vector = np.vstack(prediction)
-						print("image_vector shape:",image_vector.shape)
+						# print("image_vector shape:",image_vector.shape)
 			else:
 				import h5py
 				import copy

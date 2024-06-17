@@ -149,7 +149,7 @@ def preprocessing(inFile,outFile):
 
 
 	##write output into a file
-	print(output)
+	# print(output)
 	with open(output_file, 'w', newline = '') as f:
 		writer = csv.writer(f)
 		writer.writerows(output)
