@@ -14,7 +14,7 @@ This project presents an advanced Infant Crying Detection Algorithm using PyTorc
 ## 📄 Citation Information
 If you use this code for academic research, please include the following citation:
 
-K. Lee, L. Henry, M. Brotman, F. Pereira, “Infant Crying Detection Algorithm,” GitHub repository, National Institute of Mental Health, June 14, 2024. [Online]. Available: https://github.com/EDB-Accelerator/Infant-Crying-Detection. [Accessed: Day-Month-Year].
+K. Lee, L. Henry, E. Norton, L. Wakschlag, M. Brotman, F. Pereira, “Infant Crying Detection Algorithm,” GitHub repository, National Institute of Mental Health, June 14, 2024. [Online]. Available: https://github.com/EDB-Accelerator/Infant-Crying-Detection. [Accessed: Day-Month-Year].
 
 The development of this code is inspired and based on prior work accessible at:
 
