@@ -30,7 +30,7 @@ pip install -r requirements.txt            # PyTorch, transformers, librosa, sci
 
 ### 2 · Download data
 
-1. Request access to HomeBank (free for academic use).
+1. Request access to [HomeBank](https://homebank.talkbank.org/access/Password/deBarbaroCry.html) (free for academic use).
 2. Download the **deBarbaro** corpus and place WAV files under
 
 ```
