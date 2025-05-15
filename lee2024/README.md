@@ -70,13 +70,13 @@ Outputs (classification reports and ROC plots) appear in `analysis/`.
 
 ## Pipeline at a glance
 
-| Stage              | Details                                                       |
-| ------------------ | ------------------------------------------------------------- |
-| Pre-processing     | Silence filter + 300–3 000 Hz 5th-order Butterworth band-pass |
-| Feature extraction | Wav2Vec 2.0 (base) + MFCC-20 + chroma + spectral contrast     |
-| Feature selection  | Random-Forest top-500 importance filter                       |
-| Classifier         | Gradient Boosting (100 estimators, depth = 3)                 |
-| Metrics            | Per-subject & overall reports, ROC-AUC curves                 |
+| Stage                        | Details                                                       |
+|------------------------------| ------------------------------------------------------------- |
+| Pre-processing               | Silence filter + 300–3 000 Hz 5th-order Butterworth band-pass |
+| Feature extraction           | Wav2Vec 2.0 (base) + MFCC-20 + chroma + spectral contrast     |
+| Feature selection (Optional) | Random-Forest top-500 importance filter                       |
+| Classifier                   | Gradient Boosting (100 estimators, depth = 3)                 |
+| Metrics                      | Per-subject & overall reports, ROC-AUC curves                 |
 
 ---
 
