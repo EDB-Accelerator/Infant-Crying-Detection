@@ -1,12 +1,9 @@
 # Cry Detection Pipeline
 
 End-to-end Python workflow for detecting infant cries in the **HomeBank deBarbaro** audio corpus.
-The pipeline combines **Wav2Vec 2.0** embeddings with classical acoustic features—MFCC-20, chroma, and spectral contrast—and classifies each segment using **Gradient Boosting** with automatic feature selection.
+The pipeline fuses **Wav2Vec 2.0** embeddings with classical acoustic features—MFCC-20, chroma, and spectral contrast—and classifies each segment using **Gradient Boosting** with automatic feature selection.
 
-If this code is helpful in your work, please cite the publication(s) listed below.
-
-**Reference**
-Lee, Kyunghun *et al.* “Enhancing Infant Crying Detection with Gradient Boosting for Improved Emotional and Mental Health Diagnostics.” *arXiv 2410.09236* (2024).
+If this code proves useful in your work, please cite **at least one** of the publications listed below.
 
 ---
 
@@ -73,26 +70,42 @@ Outputs (classification reports and ROC plots) appear in `analysis/`.
 
 ## Pipeline at a glance
 
-| Stage              | Details                                                         |
-| ------------------ | --------------------------------------------------------------- |
-| Pre-processing     | Silence filter + 300 – 3 000 Hz 5th-order Butterworth band-pass |
-| Feature extraction | Wav2Vec 2.0 (base) + MFCC-20 + chroma + spectral contrast       |
-| Feature selection  | Random-Forest top-500 importance filter                         |
-| Classifier         | Gradient-Boosting (100 estimators, depth = 3)                   |
-| Metrics            | Per-subject & overall reports, ROC-AUC curves                   |
+| Stage              | Details                                                       |
+| ------------------ | ------------------------------------------------------------- |
+| Pre-processing     | Silence filter + 300–3 000 Hz 5th-order Butterworth band-pass |
+| Feature extraction | Wav2Vec 2.0 (base) + MFCC-20 + chroma + spectral contrast     |
+| Feature selection  | Random-Forest top-500 importance filter                       |
+| Classifier         | Gradient Boosting (100 estimators, depth = 3)                 |
+| Metrics            | Per-subject & overall reports, ROC-AUC curves                 |
 
 ---
 
-## Citation
+## References
+
+1. Lee, K. *et al.* (2024). *Enhancing Infant Crying Detection with Gradient Boosting for Improved Emotional and Mental Health Diagnostics.* arXiv 2410.09236.
+2. Henry, L.,Lee, K., Hansen, E., Tandilashvili, E., Rozsypal, J., Erjo, T., Raven, J.G., Reynolds, H.M., Curtis, P., Haller, S.P., Pine, D.S., Norton, E.S., Wakschlag, L.S., Pereira, F., Brotman, M.A.\* (2025). *Detecting Cry in Daylong Audio Recordings Using Machine Learning: The Development and Evaluation of Binary Classifiers.* OSF.
+
+
+---
+
+## BibTeX
 
 ```bibtex
-@misc{lee2024crying,
+@misc{lee2024cry,
   author       = {Lee, Kyunghun and others},
   title        = {Enhancing Infant Crying Detection with Gradient Boosting for Improved Emotional and Mental Health Diagnostics},
   year         = {2024},
   eprint       = {2410.09236},
   archivePrefix= {arXiv},
   primaryClass = {eess.AS}
+}
+
+@misc{henry2025cry,
+  author       = {Henry, L. and Lee, K. and Hansen, E. and Tandilashvili, E. and Rozsypal, J. and Erjo, T. and Raven, J. G. and Reynolds, H. M. and Curtis, P. and Haller, S. P. and Pine, D. S. and Norton, E. S. and Wakschlag, L. S. and Pereira, F. and Brotman, M. A.},
+  title        = {Detecting Cry in Daylong Audio Recordings Using Machine Learning: The Development and Evaluation of Binary Classifiers},
+  year         = {2025},
+  howpublished = {\\url{https://doi.org/10.31219/osf.io/3rd2y_v1}},
+  note         = {OSF Preprint}
 }
 ```
 
