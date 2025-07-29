@@ -45,7 +45,7 @@ if torch.cuda.is_available():
 # ─────────────────────────── CONSTANTS ───────────────────────────
 FS              = 22_050               # original sample rate
 TARGET_SR       = 16_000               # Wav2Vec expected SR
-LOWCUT, HIGHCUT = 300, 3_000           # band-pass (Hz)
+LOWCUT, HIGHCUT = 250, 3_000           # band-pass (Hz)
 
 HOME            = Path.home()
 DATA_ROOT       = HOME / "data/deBarbaroCry"
