@@ -1,6 +1,6 @@
 # Random 10‑Minute Clip Extractor for LENA Recordings
 
-`random_extract.py` is a stand‑alone utility for generating fixed‑length excerpts from day‑long LENA™ or other long‑form audio recordings. It selects a random 10‑minute window, segments it into 5‑second chunks, applies a lightweight cry‑energy heuristic, and keeps the first window that meets a user‑defined minimum number of detected cries. The script is intended to streamline dataset curation by producing manageable WAV files with a guaranteed amount of infant‑cry content.
+`random_extract.py` is a stand‑alone utility for generating fixed‑length excerpts from day‑long audio files or other long‑form audio recordings. It selects a random 10‑minute window, segments it into 5‑second chunks, applies a lightweight cry‑energy heuristic, and keeps the first window that meets a user‑defined minimum number of detected cries. The script is intended to streamline dataset curation by producing manageable WAV files with a guaranteed amount of infant‑cry content.
 
 ---
 
