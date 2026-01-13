@@ -23,7 +23,9 @@ Accurate cry detection supports research into infant well‑being, developmental
 
 If you use this work in academic publications, please cite:
 
-> K. Lee, L. Henry, E. Norton, L. Wakschlag, M. Brotman, F. Pereira. *Infant Crying Detection Algorithm.* GitHub repository, National Institute of Mental Health, 14 June 2024. [https://github.com/EDB‑Accelerator/Infant‑Crying‑Detection](https://github.com/EDB‑Accelerator/Infant‑Crying‑Detection)
+> L. M. Henry\*, K. Lee\*, E. Hansen, E. Tandilashvili, J. Rozsypal, T. Erjo, J. G. Raven, H. M. Reynolds, P. Curtis, S. P. Haller, D. S. Pine, E. S. Norton, L. S. Wakschlag, F. Pereira, & M. A. Brotman (2025). *Detecting cry in daylong audio recordings using machine learning: The development and evaluation of binary classifiers.* *Assessment*, Advance online publication. https://doi.org/10.1177/10731911251395993  
+>
+> \*Co-first authorship.
 
 The approach builds on:
 
@@ -109,6 +111,8 @@ CSV summaries include per‑segment probabilities and subject identifiers for do
   Each notebook has a Google Colab link for GPU access without local setup.
 
 ---
+
+
 
 ## License
 
