@@ -1,121 +1,193 @@
-# Infant Crying Detection Algorithm
+# Infant Crying Detection
 
-<img src="assets/cryingnoncryingbabywaveform.jpeg" alt="Crying vs Non‑Crying Waveform" width="600"/>
+**Deep-learning–based detection of infant crying in long-duration, naturalistic audio.**
 
-This repository provides an end‑to‑end pipeline for infant‑cry detection in day‑long, naturalistic audio recordings. The implementation is based on PyTorch and re‑implements the TensorFlow approach of Yao *et al.* (ICASSP 2022) with additional feature sets, model options, and evaluation utilities. Although developed for 12‑month‑old infants enrolled in the **When2Worry** study (3R01MH107652‑05S1; 3R01DC016273‑05S1), the code can be adapted to any corpus of WAV files.
+[![Python](https://img.shields.io/badge/Python-3.9%2B-111827?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-implementation-111827?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Transformers](https://img.shields.io/badge/Hugging%20Face-Transformers-111827?style=flat-square&logo=huggingface&logoColor=white)](https://huggingface.co/docs/transformers/)
+[![License](https://img.shields.io/badge/License-MIT-111827?style=flat-square)](LICENSE)
 
-Accurate cry detection supports research into infant well‑being, developmental trajectories, and early identification of disorders such as colic by linking acoustic patterns to clinical or behavioural outcomes.
+> An end-to-end research pipeline for identifying crying segments in daylong, real-world audio recordings.
 
----
+<p align="center">
+  <img src="assets/infant-crying-detection-hero.jpg" alt="AI-generated illustration of infant audio monitoring with waveform and spectrogram overlays" width="100%">
+</p>
 
-## Contributors
-
-* Kyunghun Lee — National Institutes of Health
-* Lauren Henry — National Institutes of Health
-* Laurie Wakschlag — Northwestern University
-* Elizabeth Norton — Northwestern University
-* Francisco Pereira — National Institutes of Health
-* Melissa Brotman — National Institutes of Health
+<p align="center"><sub><strong>Illustration:</strong> AI-generated image for project presentation only; it is not a photograph from the study or dataset.</sub></p>
 
 ---
 
-## Citation
+## Overview
 
-If you use this work in academic publications, please cite:
+Infant crying is a salient acoustic signal, but detecting it reliably in naturalistic recordings is substantially harder than classifying clean, isolated clips. Background speech, household noise, movement, reverberation, recording-device differences, and long recording sessions all introduce variability.
 
-> L. M. Henry\*, K. Lee\*, E. Hansen, E. Tandilashvili, J. Rozsypal, T. Erjo, J. G. Raven, H. M. Reynolds, P. Curtis, S. P. Haller, D. S. Pine, E. S. Norton, L. S. Wakschlag, F. Pereira, & M. A. Brotman (2025). *Detecting cry in daylong audio recordings using machine learning: The development and evaluation of binary classifiers.* *Assessment*, Advance online publication. https://doi.org/10.1177/10731911251395993  
->
-> \*Co-first authorship.
+This repository provides a **PyTorch-based, configurable pipeline** for infant-cry detection in daylong audio. It re-implements and extends the approach introduced by Yao et al. (ICASSP 2022), with additional feature representations, model backends, and subject-level evaluation utilities.
 
-The approach builds on:
+The original development focused on recordings collected as part of the **When2Worry** study and is intended as research software that can be adapted to other WAV corpora.
 
-* X. Yao *et al.* “Infant Crying Detection in Real‑World Environments,” **ICASSP** 2022.
-* M. Micheletti *et al.* “Validating a Model to Detect Infant Crying from Naturalistic Audio,” **Behavior Research Methods** 2022.
+## Why this repository exists
 
----
+The goal is not simply to produce a classifier that works on a curated benchmark. The code is organized around a more practical research question:
 
-## Background
+> **Can we identify meaningful crying events in long, imperfect, real-world recordings well enough to support downstream behavioral and clinical analyses?**
 
-Our enhancements stem from the original [AgnesMayYao/Infant‑Crying‑Detection](https://github.com/AgnesMayYao/Infant-Crying-Detection) repository. Key changes include:
+That framing drives the repository toward:
 
-* Migration to PyTorch for wider hardware support.
-* Integration of Wav2Vec 2.0 embeddings, MFCC, chroma, and spectral‑contrast features.
-* Gradient‑boosting, SVM, and CNN back‑ends with configurable pipelines.
-* Reproducible evaluation on subject‑level splits.
+- long-form audio processing rather than isolated clips;
+- configurable feature and model pipelines;
+- subject-level train/test separation;
+- reproducible batch inference and evaluation; and
+- outputs that can be consumed by downstream analyses.
 
----
+## Method at a glance
 
-## Requirements
-
-The project targets Python 3.9+. Core packages:
-
+```text
+Raw WAV recordings
+        │
+        ▼
+Signal preprocessing
+        │
+        ├── filtering / conditioning
+        ├── windowing
+        └── spectrogram generation
+        │
+        ▼
+Feature representation
+        │
+        ├── MFCC
+        ├── chroma
+        ├── spectral contrast
+        └── Wav2Vec 2.0 embeddings
+        │
+        ▼
+Model / classifier
+        │
+        ├── CNN / spectrogram model
+        ├── SVM-based pipeline
+        └── gradient-boosting pipeline
+        │
+        ▼
+Segment-level prediction
+        │
+        └── 1 = crying · 0 = non-cry
+        │
+        ▼
+CSV summaries for downstream analysis
 ```
-pytorch
-transformers
-librosa
-pydub
-pandas
-numpy
-scipy
-soundfile
-scikit‑learn
-joblib
-```
 
-Install all dependencies with:
+The repository currently includes preprocessing, CNN training, hybrid CNN+SVM training, end-to-end prediction, and utilities for extracting shorter candidate clips from long recordings.
+
+## Repository structure
+
+| Path | Purpose |
+| --- | --- |
+| `cry_detection_pipeline.py` | Main training / inference pipeline using Wav2Vec 2.0, traditional features, and gradient boosting. |
+| `random_extract.py` | Extracts 10-minute clips containing at least *n* cry-like 5-second windows. |
+| `src/preprocessing.py` | Signal conditioning, band-pass filtering, and mel-spectrogram generation. |
+| `src/train_alex.py` | CNN / AlexNet-style spectrogram training with augmentation and early stopping. |
+| `src/train_svm.py` | Hybrid CNN + SVM training pipeline. |
+| `src/predict.py` | End-to-end WAV → preprocessing → CNN features → SVM inference. |
+| `example/train.ipynb` | End-to-end training notebook. |
+| `example/prediction.ipynb` | Batch inference notebook. |
+| `lee2024/` | Project-specific research materials and analyses. |
+| `assets/` | README and project presentation assets. |
+
+## Installation
+
+Python 3.9+ is recommended.
+
+Install the project dependencies with:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-GPU support is optional but recommended.
+Core dependencies include PyTorch, Transformers, librosa, pydub, NumPy, SciPy, pandas, scikit-learn, soundfile, and joblib.
 
----
+GPU acceleration is optional, but may be useful for model training and embedding extraction.
 
-## Sample Data
+## Data
 
-* **Format:** 16‑bit, 16 kHz, mono WAV.
-* A small example clip is provided under `sample_data/`.
-* Additional corpora: the [HomeBank deBarbaro dataset](https://homebank.talkbank.org/access/Password/deBarbaroCry.html).
+The pipeline is designed for WAV audio and supports the project's original long-duration recordings. The repository documentation describes the target sample format as:
 
----
+- 16-bit PCM
+- 16 kHz
+- mono
+
+For additional data exploration, the project documentation also references the **HomeBank / TalkBank deBarbaro dataset** as a related corpus.
+
+> **Data note:** This repository does not redistribute restricted participant recordings. Use only data for which you have the appropriate access and permissions.
+
+## Training and inference
+
+The project exposes training, prediction, and evaluation through its Python scripts and example notebooks. The exact flags and experiment configuration should be taken from the code in the current checkout rather than hard-coded into this README.
+
+For a guided start, open:
+
+- [`example/train.ipynb`](example/train.ipynb)
+- [`example/prediction.ipynb`](example/prediction.ipynb)
+
+The notebooks include Google Colab links for GPU-enabled execution.
 
 ## Outputs
 
-Predictions are binary:
+The classifier produces binary segment-level predictions:
 
-* `1` – crying detected
-* `0` – non‑cry segment
+```text
+1 → crying detected
+0 → non-cry
+```
 
-CSV summaries include per‑segment probabilities and subject identifiers for downstream analysis.
+CSV summaries can also retain per-segment probabilities and subject identifiers for downstream analysis.
 
----
+## Reproducibility and evaluation
 
-## Source Code Overview
+For research use, evaluation should be performed with **subject-level splits** so recordings from the same participant do not leak across training and test sets. The repository was extended with this evaluation structure specifically to better reflect generalization across participants.
 
-| File                        | Purpose                                                                                                                                                  |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cry_detection_pipeline.py` | Full training / inference pipeline with Wav2Vec 2.0 + traditional features and gradient boosting. Toggle training, prediction, and evaluation via flags. |
-| `random_extract.py`         | Automated extraction of 10‑minute clips that contain at least *n* cry‑like 5‑second windows. Useful for curating balanced datasets from long recordings. |
-| `src/preprocessing.py`      | Signal conditioning, band‑pass filtering, and mel‑spectrogram generation.                                                                                |
-| `src/train_alex.py`         | CNN (AlexNet‑style) training on spectrograms. Includes data augmentation, early stopping, and optional L2 regularisation.                                |
-| `src/train_svm.py`          | Hybrid CNN + SVM training pipeline for robust classification.                                                                                            |
-| `src/predict.py`            | End‑to‑end inference: preprocess WAV → CNN features → SVM classification.                                                                                |
+When reporting new experiments, document at least:
 
----
+- participant-level split strategy;
+- feature representation;
+- model backend;
+- preprocessing parameters;
+- decision threshold; and
+- the evaluation metric used.
 
-## Jupyter / Colab Examples
+This README intentionally does **not** hard-code a single performance number: results depend on the dataset, split, feature set, and model configuration used for a particular experiment.
 
-* [`example/train.ipynb`](example/train.ipynb) – end‑to‑end model training.
-* [`example/prediction.ipynb`](example/prediction.ipynb) – batch inference.
-  Each notebook has a Google Colab link for GPU access without local setup.
+## Research context
 
----
+This implementation builds on prior work in infant-cry detection and naturalistic audio analysis:
 
+1. **Yao et al. (ICASSP 2022)** — *Infant Crying Detection in Real-World Environments.*
+2. **Micheletti et al. (Behavior Research Methods, 2022)** — validation of infant-cry detection from naturalistic audio.
+3. **Henry et al. (2025)** — *Detecting cry in daylong audio recordings using machine learning: The development and evaluation of binary classifiers.*
 
+The current repository extends that line of work with a PyTorch implementation, additional feature sets, multiple model backends, and reproducible evaluation utilities.
+
+## Citation
+
+If you use this code or the associated methods in academic work, please cite:
+
+> Henry, L. M., Lee, K., Hansen, E., Tandilashvili, E., Rozsypal, J., Erjo, T., Raven, J. G., Reynolds, H. M., Curtis, P., Haller, S. P., Pine, D. S., Norton, E. S., Wakschlag, L. S., Pereira, F., & Brotman, M. A. (2025). *Detecting cry in daylong audio recordings using machine learning: The development and evaluation of binary classifiers.* Assessment. https://doi.org/10.1177/10731911251395993
 
 ## License
 
-This project is released under the MIT License; see `LICENSE` for the full text.
+This repository is released under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 
-```
+## Contributors
+
+- Kyunghun Lee — National Institutes of Health
+- Lauren Henry — National Institutes of Health
+- Laurie Wakschlag — Northwestern University
+- Elizabeth Norton — Northwestern University
+- Francisco Pereira — National Institutes of Health
+- Melissa Brotman — National Institutes of Health
+
+## Acknowledgments
+
+This work builds on the open-source **Infant-Crying-Detection** implementation by Agnes May Yao and related prior research in naturalistic infant-vocalization analysis.
+
+---
+
+<p align="center"><sub>Research software for reproducible audio-based infant-cry detection.</sub></p>
